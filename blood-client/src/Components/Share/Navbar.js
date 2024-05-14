@@ -74,14 +74,14 @@ const Navbar = ({ setSearchGet }) => {
         </div>
         <Link
           to="/"
-          className="btn btn-ghost normal-case font-bold lg:text-3xl  sm:text-sm text-amber-500 ml-5"
+          className="btn btn-ghost normal-case font-bold lg:text-3xl  sm:text-sm text-red-400 ml-5"
         >
           <img
             className="h-12 mr-2 rounded-full"
-            src="https://seeklogo.com/images/E/education-book-sun-logo-B0AC2622BD-seeklogo.com.png"
+            src="https://img.pikbest.com/origin/09/27/23/12RpIkbEsTxKZ.png!sw800"
             alt=""
           />
-          Knowledge Café
+         Blood 
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex lg:pr-28 ml-40">
@@ -90,7 +90,7 @@ const Navbar = ({ setSearchGet }) => {
             <input
               value={searchQuery}
               onChange={handleSearch}
-              placeholder="🔍 Search Queries"
+              placeholder="🔍 Search Blood"
               className="bg-slate-700 w-[550px] pl-3 p-[5px] rounded-lg text-slate-100"
               type="text"
               name=""

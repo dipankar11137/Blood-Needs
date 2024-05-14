@@ -6,7 +6,7 @@ const RightSide = () => {
       <div className="brightness-75">
         <img
           className="w-full "
-          src="https://fotofirstphotobook.co.za/wp-content/uploads/2023/11/POSTER-6-black-Friday-2023-01-01.jpg"
+          src="https://cdn.venngage.com/template/thumbnail/310/77a0a6e8-cedd-4cc6-98c0-e76f8ec09189.webp"
           alt=""
         />
       </div>

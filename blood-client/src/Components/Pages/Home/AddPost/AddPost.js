@@ -27,17 +27,17 @@ const AddPost = () => {
                   alt=""
                 />
                 <h1 className="w-full bg-slate-600 rounded-xl pl-2 py-1 text-slate-300">
-                  What's on your mind , {user?.name} ?
+                  Needs Blood Post Here , {user?.name} ?
                 </h1>
               </div>
               <div className="mt-3 pb-1 flex justify-between mx-20">
                 <div className="flex items-end gap-1">
                   <img
-                    className="h-6 w-8"
-                    src="https://pngimg.com/d/question_mark_PNG128.png"
+                    className="h-8 w-8"
+                    src="https://cdn-icons-png.flaticon.com/256/2339/2339486.png"
                     alt=""
                   />
-                  <h1>Queries / Doubt</h1>
+                  <h1>Blood & Blood</h1>
                 </div>
                 <div className="flex items-end gap-1">
                   <img
@@ -53,7 +53,7 @@ const AddPost = () => {
                     src="https://cdn-icons-png.flaticon.com/512/8899/8899643.png"
                     alt=""
                   />
-                  <h1>Solution / Fixed</h1>
+                  <h1>Give & Save</h1>
                 </div>
               </div>
             </div>
@@ -67,7 +67,10 @@ const AddPost = () => {
         </div>
       ) : (
         <div>
-          <div onClick={handleClick} className="bg-slate-800 m-2 p-2 rounded-lg hover:cursor-pointer">
+          <div
+            onClick={handleClick}
+            className="bg-slate-800 m-2 p-2 rounded-lg hover:cursor-pointer"
+          >
             <div className="flex items-center gap-3">
               <img
                 className="h-12 w-12 rounded-full"
