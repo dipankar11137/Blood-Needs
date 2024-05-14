@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const PostCart = ({user}) => {
-  const imageHostKey = '994b53a825eae75f8000377c3706bb31';
+  const imageHostKey = 'c70a5fc10619997bd7315f2bf28d0f3e';
 
   const currentDate = new Date();
 
@@ -103,11 +103,11 @@ const PostCart = ({user}) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control w-full ">
             <label className="label">
-              <span className="label-text">Quires / Question</span>
+              <span className="label-text">Post Here</span>
             </label>
             <textarea
               type="text"
-              placeholder="Write yours quires"
+              placeholder="Write your post"
               className="input input-bordered bg-slate-600 w-full  pt-1 h-32 text-slate-100"
               {...register('description', {})}
             />

@@ -81,7 +81,7 @@ const Navbar = ({ setSearchGet }) => {
             src="https://img.pikbest.com/origin/09/27/23/12RpIkbEsTxKZ.png!sw800"
             alt=""
           />
-         Blood 
+          Blood
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex lg:pr-28 ml-40">
@@ -105,22 +105,40 @@ const Navbar = ({ setSearchGet }) => {
       <div className="navbar-end">
         {user ? (
           <div className="dropdown dropdown-end  mr-5">
-            <ul className="flex gap-5 items-center">
-              {user && (
-                <li className="font-bold text-slate-400 hover:text-orange-400">
-                  <Link to="/quiz">Quiz</Link>
-                </li>
-              )}
-              {user?.email === 'nahid@gmail.com' && (
-                <li className="font-bold text-slate-400 hover:text-orange-400">
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
-              )}
+            <label tabindex="0" className="btn btn-ghost btn-circle avatar z-50">
+              <div className="w-10 rounded-full">
+                {booking[0]?.updateData?.img ? (
+                  <img src={booking[0]?.updateData?.img} alt="" />
+                ) : (
+                  <img
+                    src="https://cdn.imgbin.com/6/25/24/imgbin-user-profile-computer-icons-user-interface-mystique-aBhn3R8cmqmP4ECky4DA3V88y.jpg"
+                    alt=""
+                  />
+                )}
+              </div>
+            </label>
+            <ul
+              tabindex="0"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow  rounded-box w-40 bg-gray-800 border-gray-700 hover:bg-purple-900 "
+            >
+              <li>
+                <Link to="/">Profile</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
 
-              <li className=" ">
-                <button className="  text-amber-500" onClick={logout}>
-                  SignOut
-                </button>
+              <li className=" font-bold">
+                {user ? (
+                  <button
+                    className=" font-bold text-orange-500"
+                    onClick={logout}
+                  >
+                    Sign Out
+                  </button>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
               </li>
             </ul>
           </div>
