@@ -168,7 +168,7 @@ async function run() {
       //
       options.forEach(option => {
         const optionBooked = alreadyBooked.filter(
-          book => book.terminalName === option.name
+          book => book.doctorName === option.name
         );
         const bookedSlots = optionBooked.map(book => book.slot);
         const remainingSlots = option.slots.filter(
