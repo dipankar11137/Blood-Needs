@@ -23,13 +23,12 @@ async function run() {
   try {
     await client.connect();
 
-    const userCollection = client.db('queries').collection('user');
-    const quiresCollection = client.db('queries').collection('quires');
+    const userCollection = client.db('blood').collection('user');
+    const quiresCollection = client.db('blood').collection('quires');
 
-    const commentCollection = client.db('queries').collection('comments');
-    const quizSolutionCollection = client
-      .db('queries')
-      .collection('quizSolution');
+    const commentCollection = client.db('blood').collection('comments');
+    const appointmentCollection = client.db('blood').collection('appointments');
+      const bookingCollection = client.db('blood').collection('bookings');
 
     // // // // // // // // // // // //
 
@@ -153,6 +152,68 @@ async function run() {
     //   const result = await cursor.toArray();
     //   res.send(result);
     // });
+
+    // doctor
+
+    // // get appointments to query multiple collection  and them marge data
+
+    app.get('/appointments', async (req, res) => {
+      const date = req.query.date;
+      const query = {};
+      const options = await appointmentCollection.find(query).toArray();
+      const bookingQuery = { date: date };
+      const alreadyBooked = await bookingCollection
+        .find(bookingQuery)
+        .toArray();
+      //
+      options.forEach(option => {
+        const optionBooked = alreadyBooked.filter(
+          book => book.terminalName === option.name
+        );
+        const bookedSlots = optionBooked.map(book => book.slot);
+        const remainingSlots = option.slots.filter(
+          slot => !bookedSlots.includes(slot)
+        );
+        option.slots = remainingSlots;
+      });
+      res.send(options);
+    });
+
+    // Post appointments
+    app.post('/appointments', async (req, res) => {
+      const appointmentsBook = req.body;
+      const result = await appointmentCollection.insertOne(appointmentsBook);
+      res.send(result);
+    });
+    // post Booking/ terminal
+    app.post('/bookings', async (req, res) => {
+      const newBooking = req.body;
+      const result = await bookingCollection.insertOne(newBooking);
+      res.send(result);
+    });
+    // get Booking/terminal
+    app.get('/bookings', async (req, res) => {
+      const query = {};
+      const cursor = bookingCollection.find(query);
+      const users = await cursor.toArray();
+      res.send(users);
+    });
+    // bookings filter by email
+    app.get('/myBookings/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const cursor = bookingCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    //  Booking filter by Division
+    app.get('/bookingDate/:date', async (req, res) => {
+      const date = req.params.date;
+      const query = { date };
+      const cursor = bookingCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
   } finally {
   }
 }
