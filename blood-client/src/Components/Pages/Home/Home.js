@@ -34,7 +34,6 @@ const Home = ({ searchGet }) => {
           </div>
         </div>
         <div className="col-span-7">
-          <Appointment />
           {home === 'home' && (
             <div>
               <AddPost />
@@ -45,6 +44,11 @@ const Home = ({ searchGet }) => {
           {home === 'member' && (
             <div>
               <Members members={members} />
+            </div>
+          )}
+          {home === 'doctor' && (
+            <div>
+              <Appointment />
             </div>
           )}
         </div>

@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const AddDoctor = () => {
-  const imageHostKey = 'c70a5fc10619997bd7315f2bf28d0f3e';
+const EditDoctor = () => {
+  const [doctor, setDoctor] = useState({});
 
   const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState('');
-  const [saturday, setSaturday] = useState(false);
-  const [sunday, setSunday] = useState(false);
-  const [monday, setMonday] = useState(false);
-  const [tuesday, setTuesday] = useState(false);
-  const [wednesday, setWednesday] = useState(false);
-  const [thursday, setThursday] = useState(false);
-  const [friday, setFriday] = useState(false);
+    const [saturday, setSaturday] = useState(false);
+    const [sunday, setSunday] = useState(false);
+    const [monday, setMonday] = useState(false);
+    const [tuesday, setTuesday] = useState(false);
+    const [wednesday, setWednesday] = useState(false);
+    const [thursday, setThursday] = useState(false);
+    const [friday, setFriday] = useState(false);
+  const navigator=useNavigate()
+   const { id } = useParams();
+   useEffect(() => {
+     fetch(`http://localhost:5000/doctor/${id}`)
+       .then(res => res.json())
+       .then(data => setDoctor(data));
+   }, [doctor, id]);
+  
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setSaturday(doctor.saturday ? true : false);
+    setSunday(doctor.sunday ? true : false);
+    setMonday(doctor.monday ? true : false);
+    setTuesday(doctor.tuesday ? true : false);
+    setWednesday(doctor.wednesday ? true : false);
+    setThursday(doctor.thursday ? true : false);
+    setFriday(doctor.friday ? true : false);
+  }, 3000);
+
+  // Cleanup function to clear the timeout
+  return () => clearTimeout(timer);
+}, [id]);
 
   const {
     register,
@@ -38,74 +61,60 @@ const AddDoctor = () => {
     setArrays(newArray);
   };
 
+
   const onSubmit = data => {
-    setLoading(true);
+    const slots = [];
+    for (let i = 1; i <= value; i++) {
+      slots.push(data[`slot${i}`]);
+    }
+    const updateDoctor = {
+      saturday:saturday||doctor.saturday,
+      sunday:sunday||doctor.sunday,
+      monday:monday||doctor.monday,
+      tuesday:tuesday||doctor.tuesday,
+      wednesday:wednesday||doctor.wednesday,
+      thursday:thursday||doctor.thursday,
+      friday:friday||doctor.friday,
+      name: data.name || doctor.name,
+      email: data.email || doctor.email,
+      phone: data.phone || doctor.phone,
+      degree: data.degree || doctor.degree,
+      description: data.description || doctor.description,
+      img: data.img || doctor.img,
+      department: department || doctor.department,
+      slots:doctor.slots||slots
+    };
+  
+      fetch(`http://localhost:5000/updateDoctor/${id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(updateDoctor),
+      })
+        .then(res => res.json())
+        .then(data => {
+          setLoading(false);
+          toast.success('Update Successful');
 
-    const image = data.image[0];
-
-    const formData = new FormData();
-    formData.append('image', image);
-    const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`;
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(imageData => {
-        const image = imageData.data.url;
-        const slots = [];
-        for (let i = 1; i <= value; i++) {
-          slots.push(data[`slot${i}`]);
-        }
-        const changeUrl = {
-          name: data.name,
-          degree: data.degree,
-          email: data.email,
-          phone: data.phone,
-          description: data.description,
-          img: image,
-          department,
-          saturday,
-          sunday,
-          monday,
-          tuesday,
-          wednesday,
-          thursday,
-          friday,
-          slots,
-        };
-        // console.log(changeUrl);
-
-        fetch(`http://localhost:5000/appointments`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify(changeUrl),
-        })
-          .then(res => res.json())
-          .then(data => {
-            setLoading(false);
-            toast.success('Successfully Add This ');
-            reset();
-          });
-      });
-  };
+          navigator('/dashboard/manageDoctor');
+        });
+   }
   return (
-    <div className="mx-5">
-      <h1 className="text-4xl my-2 text-center font-bold text-primary">
-        Add Doctor
-      </h1>
-      <div>
+    <div>
+      <div className="m-5 rounded-lg bg-slate-500">
+        <h1 className="text-xl ml-2 font-semibold py-2 text-orange-100">
+          Edit Now
+        </h1>
         <form
-          className=" gap-4 bg-slate-800 text-white p-4 rounded-lg"
+          className=" gap-4 bg-slate-700 p-4 rounded-lg rounded-t-none"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             {/* 1st colum */}
             <div className="col-span-3">
               {/* name */}
-              <div>
+              <div className="mb-2">
                 <label className="label">
                   <span className="label-text text-xl font-semibold ">
                     Doctor Name
@@ -113,106 +122,54 @@ const AddDoctor = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Doctor name"
+                  placeholder={
+                    doctor?.name ? doctor?.name : 'Enter Doctor Name'
+                  }
                   className="input input-bordered bg-white text-black lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[35px]"
-                  {...register('name', {
-                    required: {
-                      value: true,
-                      message: 'Name is Required',
-                    },
-                  })}
+                  {...register('name', {})}
                 />
-                <label className="label">
-                  {errors.name?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
-                      {errors?.name?.message}
-                    </span>
-                  )}
-                </label>
               </div>
               {/* email */}
-              <div>
+              <div className="mb-2">
                 <input
                   type="email"
-                  placeholder="Doctor Email"
+                  placeholder={
+                    doctor?.email ? doctor?.email : 'Enter Doctor Email'
+                  }
                   className="input input-bordered bg-white text-black lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[35px]"
-                  {...register('email', {
-                    required: {
-                      value: true,
-                      message: 'Email is Required',
-                    },
-                  })}
+                  {...register('email', {})}
                 />
-                <label className="label">
-                  {errors.email?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
-                      {errors?.email?.message}
-                    </span>
-                  )}
-                </label>
               </div>
               {/* phone */}
               <div>
                 <input
                   type="phone"
-                  placeholder="Doctor Phone Number"
-                  className="input input-bordered bg-white text-black lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[35px]"
-                  {...register('phone', {
-                    required: {
-                      value: true,
-                      message: 'Phone is Required',
-                    },
-                  })}
+                  placeholder={
+                    doctor?.phone ? doctor?.phone : 'Doctor Phone Number'
+                  }
+                  className="input input-bordered bg-white text-black font-normal lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[35px]"
+                  {...register('phone', {})}
                 />
-                <label className="label">
-                  {errors.phone?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
-                      {errors?.phone?.message}
-                    </span>
-                  )}
-                </label>
               </div>
               {/* degree */}
-              <div>
+              <div className="my-2">
                 <input
                   type="text"
-                  placeholder="Degree name"
+                  placeholder={doctor?.degree ? doctor?.degree : 'Degree name'}
                   className="input input-bordered bg-white text-black lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[35px]"
-                  {...register('degree', {
-                    required: {
-                      value: true,
-                      message: 'Degree is Required',
-                    },
-                  })}
+                  {...register('degree', {})}
                 />
-                <label className="label">
-                  {errors.degree?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
-                      {errors?.degree?.message}
-                    </span>
-                  )}
-                </label>
               </div>
               {/* description */}
               <div>
                 <textarea
                   type="text"
-                  placeholder="About Doctor"
+                  placeholder={
+                    doctor?.description ? doctor?.description : 'About Doctor'
+                  }
                   className="input input-bordered bg-white text-black lg:w-72 sm:w-full max-w-xs hover:shadow-xl shadow-inner border-blue-900 h-[60px] "
-                  {...register('description', {
-                    required: {
-                      value: true,
-                      message: 'About Doctor is Required',
-                    },
-                  })}
+                  {...register('description', {})}
                 />
-                <label className="label">
-                  {errors.description?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
-                      {errors?.description?.message}
-                    </span>
-                  )}
-                </label>
               </div>
               {/* department */}
               <div>
@@ -262,7 +219,8 @@ const AddDoctor = () => {
                   onChange={e => setSaturday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Saturday
                 </h1>
               </div>
@@ -273,7 +231,7 @@ const AddDoctor = () => {
                   onChange={e => setSunday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Sunday
                 </h1>
               </div>
@@ -284,7 +242,7 @@ const AddDoctor = () => {
                   onChange={e => setMonday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Monday
                 </h1>
               </div>
@@ -295,7 +253,7 @@ const AddDoctor = () => {
                   onChange={e => setTuesday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Tuesday
                 </h1>
               </div>
@@ -306,7 +264,7 @@ const AddDoctor = () => {
                   onChange={e => setWednesday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Wednesday
                 </h1>
               </div>
@@ -317,7 +275,7 @@ const AddDoctor = () => {
                   onChange={e => setThursday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Thursday
                 </h1>
               </div>
@@ -328,7 +286,7 @@ const AddDoctor = () => {
                   onChange={e => setFriday(e.target.checked)}
                   className="checkbox checkbox-secondary checkbox-sm"
                 />
-                <h1 className="text-xl  font-semibold text-indigo-300">
+                <h1 className="text-xl  font-semibold text-indigo-200">
                   Friday
                 </h1>
               </div>
@@ -341,19 +299,15 @@ const AddDoctor = () => {
                   </span>
                 </label>
                 <input
-                  type="file"
-                  className="input input-bordered text-white lg:w-72 sm:w-full max-w-xs pt-1    hover:shadow-xl shadow-inner h-[40px]"
-                  {...register('image', {
-                    required: {
-                      value: true,
-                      message: 'Image is Required',
-                    },
-                  })}
+                  type="text"
+                  placeholder={doctor?.img ? doctor?.img : 'Enter Doctor Email'}
+                  className="input input-bordered text-black lg:w-72 sm:w-full max-w-xs  hover:shadow-xl shadow-inner h-[40px]"
+                  {...register('img', {})}
                 />
 
                 <label className="label">
                   {errors.image?.type === 'required' && (
-                    <span className="label-text-alt text-red-500">
+                    <span className="label-text-alt text-red-400">
                       {errors?.image?.message}
                     </span>
                   )}
@@ -407,4 +361,4 @@ const AddDoctor = () => {
   );
 };
 
-export default AddDoctor;
+export default EditDoctor;

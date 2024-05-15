@@ -74,7 +74,7 @@ const Dashboard = () => {
                     {' '}
                     <Link
                       to="/dashboard/addDoctor"
-                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-warning rounded-md`}
+                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
                     >
                       <div>
                         {React.createElement(MdDashboard, {
@@ -89,7 +89,67 @@ const Dashboard = () => {
                           !open && 'opacity-0 translate-x-28 overflow-hidden '
                         }`}
                       >
-                      Add Doctor
+                        Add Doctor
+                      </h2>
+                    </Link>
+                  </div>
+                  <div
+                    onClick={() => setSelectedButton('Button 2')}
+                    className={
+                      selectedButton === 'Button 2'
+                        ? 'bg-slate-900 text-white w-[215px] rounded-lg'
+                        : ''
+                    }
+                  >
+                    {' '}
+                    <Link
+                      to="/dashboard/manageDoctor"
+                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
+                    >
+                      <div>
+                        {React.createElement(MdDashboard, {
+                          size: '20',
+                        })}
+                      </div>
+                      <h2
+                        style={{
+                          transitionDelay: `${0 + 3}00ms`,
+                        }}
+                        className={`whitespace-pre duration-500  ${
+                          !open && 'opacity-0 translate-x-28 overflow-hidden '
+                        }`}
+                      >
+                        All Doctor
+                      </h2>
+                    </Link>
+                  </div>
+                  <div
+                    onClick={() => setSelectedButton('Button 3')}
+                    className={
+                      selectedButton === 'Button 3'
+                        ? 'bg-slate-900 text-white w-[215px] rounded-lg'
+                        : ''
+                    }
+                  >
+                    {' '}
+                    <Link
+                      to="/dashboard/bookings"
+                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
+                    >
+                      <div>
+                        {React.createElement(MdDashboard, {
+                          size: '20',
+                        })}
+                      </div>
+                      <h2
+                        style={{
+                          transitionDelay: `${0 + 3}00ms`,
+                        }}
+                        className={`whitespace-pre duration-500  ${
+                          !open && 'opacity-0 translate-x-28 overflow-hidden '
+                        }`}
+                      >
+                        Booking
                       </h2>
                     </Link>
                   </div>
@@ -103,8 +163,8 @@ const Dashboard = () => {
                   >
                     {' '}
                     <Link
-                      to="/dashboard"
-                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-warning rounded-md`}
+                      to="/dashboard/allPost"
+                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
                     >
                       <div>
                         {React.createElement(MdDashboard, {
@@ -119,12 +179,10 @@ const Dashboard = () => {
                           !open && 'opacity-0 translate-x-28 overflow-hidden '
                         }`}
                       >
-                       All Queries
+                        All Post
                       </h2>
                     </Link>
                   </div>
-
-                  
                 </div>
               </div>
             </section>

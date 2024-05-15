@@ -99,7 +99,7 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
         <div className="pb-2 text-slate-400">
           {doctor ? (
             <button
-              onClick={() => setDoctor(false)}
+              onClick={() => { setDoctor(false);    setHome('home');}}
               className="flex justify-between items-center w-[180px] hover:bg-slate-800 p-2 rounded-lg"
             >
               Doctor
@@ -107,7 +107,7 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
             </button>
           ) : (
             <button
-              onClick={() => setDoctor(true)}
+                onClick={() => { setDoctor(true);    setHome('doctor');}}
               className="flex justify-between items-center w-[180px] hover:bg-slate-800 p-2 rounded-lg"
             >
               Doctor

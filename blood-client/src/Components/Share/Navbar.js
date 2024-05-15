@@ -122,7 +122,10 @@ const Navbar = ({ setSearchGet }) => {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow  rounded-box w-40 bg-gray-800 border-gray-700 hover:bg-purple-900 "
             >
               <li>
-                <Link to="/">Profile</Link>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/myBooking">My Booking</Link>
               </li>
               <li>
                 <Link to="/dashboard">Dashboard</Link>

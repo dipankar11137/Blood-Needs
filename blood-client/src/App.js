@@ -7,7 +7,15 @@ import CreateAccount from "./Components/Login/CreateAccount";
 import Login from "./Components/Login/Login";
 import RequireAuth from "./Components/Login/RequireAUth";
 import AddDoctor from "./Components/Pages/Dashboard/AddDoctor/AddDoctor";
+import Bookings from "./Components/Pages/Dashboard/Boooking/Bookings";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
+import EditDoctor from "./Components/Pages/Dashboard/ManageDoctor/EditDoctor";
+import ManageDoctors from "./Components/Pages/Dashboard/ManageDoctor/ManageDoctors";
+import MyBookings from "./Components/Pages/Dashboard/MyBookings/MyBookings";
+import Payment from "./Components/Pages/Dashboard/MyBookings/Payment";
+import DoctorPayment from "./Components/Pages/Dashboard/Profile/DoctorPayment";
+import PaymentMember from "./Components/Pages/Dashboard/Profile/PaymentMember";
+import Profile from "./Components/Pages/Dashboard/Profile/Profile";
 import ShowAllQueries from "./Components/Pages/Dashboard/ShowAllQueries/ShowAllQueries";
 import Home from "./Components/Pages/Home/Home";
 import Navbar from "./Components/Share/Navbar";
@@ -45,7 +53,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home searchGet={searchGet} />}></Route>
 
+        <Route path="/myBooking" element={<MyBookings />}></Route>
+        <Route path="/payment/:id" element={<Payment />}></Route>
+        <Route path="/paymentMember/:id" element={<PaymentMember />}></Route>
+        <Route path="/paymentDoctor/:id" element={<DoctorPayment />}></Route>
         <Route path="/createAccount" element={<CreateAccount />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/*" element={<NotFound />}></Route>
 
@@ -57,11 +70,13 @@ function App() {
             </RequireAuth>
           }
         >
-          <Route index element={<ShowAllQueries />} />
+          <Route index element={<AddDoctor />} />
           <Route path="addDoctor" element={<AddDoctor />} />
-          {/* <Route path="bookings" element={<Bookings />} />
           <Route path="manageDoctor" element={<ManageDoctors />} />
           <Route path="editDoctor/:id" element={<EditDoctor />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="allPost" element={<ShowAllQueries />} />
+          {/* 
           <Route path="manageContact" element={<ManageContacts />} />
           <Route path="profile" element={<Profile />} />
           <Route path="contact" element={<Contact />} /> */}
