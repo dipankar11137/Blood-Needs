@@ -26,14 +26,14 @@ const Profile = () => {
     const address = e.target.address.value || dbUser[0].address;
 
     const bio = e.target.bio.value || dbUser[0].bio;
-    const photo = e.target.photo.value || dbUser[0].photo;
+    const img = e.target.photo.value || dbUser[0].img;
 
     const updatedProfile = {
       name,
       phone,
       address,
       bio,
-      photo,
+      img,
     };
 
     fetch(`http://localhost:5000/create-user/${authUser?.email}`, {
@@ -107,18 +107,34 @@ const Profile = () => {
               </div>
             </div>
             <div className="flex justify-between mr-5">
-              <button
-                onClick={() => handleMember(dbUser[0]?._id)}
-                className="btn btn-accent font-bold "
-              >
-                For Member
-              </button>
-              <button
-                onClick={() => handleDoctor(dbUser[0]?._id)}
-                className="btn btn-accent font-bold "
-              >
-                For Doctor
-              </button>
+              <div>
+                {!dbUser[0].paymentMember ? (
+                  <button
+                    onClick={() => handleMember(dbUser[0]?._id)}
+                    className="btn btn-accent font-bold "
+                  >
+                    For Member
+                  </button>
+                ) : (
+                  <h1 className="text-accent text-xl font-semibold bg-slate-800 rounded-md p-2">
+                    Member{' '}
+                  </h1>
+                )}
+              </div>
+              <div>
+                {!dbUser[0].paymentDoctor ? (
+                  <button
+                    onClick={() => handleDoctor(dbUser[0]?._id)}
+                    className="btn btn-accent font-bold "
+                  >
+                    For Doctor
+                  </button>
+                ) : (
+                  <h1 className="text-accent text-xl font-semibold bg-slate-800 rounded-md p-2">
+                    Access  Doctor{' '}
+                  </h1>
+                )}
+              </div>
             </div>
             <div className="flex justify-center">
               <button
