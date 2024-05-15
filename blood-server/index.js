@@ -28,7 +28,7 @@ async function run() {
 
     const commentCollection = client.db('blood').collection('comments');
     const appointmentCollection = client.db('blood').collection('appointments');
-      const bookingCollection = client.db('blood').collection('bookings');
+    const bookingCollection = client.db('blood').collection('bookings');
 
     // // // // // // // // // // // //
 
@@ -68,6 +68,43 @@ async function run() {
       const cursor = userCollection.find(query);
       const user = await cursor.toArray();
       res.send(user);
+    });
+
+    // get user by id
+    app.get('/userMember/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await userCollection.findOne(query);
+      res.send(result);
+    });
+
+    //  update payment 
+    app.put('/memberPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          paymentMember: updatePayment.paymentMember,
+        },
+      };
+      const result = await userCollection.updateOne(query, updateDoc, options);
+      res.send(result);
+    });
+    //  update payment 
+    app.put('/doctorPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          paymentDoctor: updatePayment.paymentDoctor,
+        },
+      };
+      const result = await userCollection.updateOne(query, updateDoc, options);
+      res.send(result);
     });
 
     // // //  *********  post quires  ********//
@@ -155,17 +192,23 @@ async function run() {
 
     // doctor
 
-    // // get appointments to query multiple collection  and them marge data
+    // // //  *********  appointments  ********//
 
+    // // get appointments to query multiple collection  and them marge data
     app.get('/appointments', async (req, res) => {
-      const date = req.query.date;
-      const query = {};
+      const { date, department } = req.query;
+      const query = {}; // Your initial query conditions
+
+      if (department) {
+        query.department = department; // Add department filter to the query
+      }
+
       const options = await appointmentCollection.find(query).toArray();
-      const bookingQuery = { date: date };
+      const bookingQuery = { appointmentDate: date };
       const alreadyBooked = await bookingCollection
         .find(bookingQuery)
         .toArray();
-      //
+
       options.forEach(option => {
         const optionBooked = alreadyBooked.filter(
           book => book.doctorName === option.name
@@ -176,6 +219,7 @@ async function run() {
         );
         option.slots = remainingSlots;
       });
+
       res.send(options);
     });
 
@@ -183,6 +227,65 @@ async function run() {
     app.post('/appointments', async (req, res) => {
       const appointmentsBook = req.body;
       const result = await appointmentCollection.insertOne(appointmentsBook);
+      res.send(result);
+    });
+    // get doctor
+    app.get('/doctor', async (req, res) => {
+      const query = {};
+      const cursor = appointmentCollection.find(query);
+      const users = await cursor.toArray();
+      res.send(users);
+    });
+    // get doctor by id
+    app.get('/doctor/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await appointmentCollection.findOne(query);
+      res.send(result);
+    });
+    // update doctor
+    app.put('/updateDoctor/:id', async (req, res) => {
+      const productId = req.params.id;
+      const updateDoctor = req.body;
+
+      const filter = { _id: ObjectId(productId) }; // Assuming you're using MongoDB ObjectId
+      const options = { upsert: true };
+
+      const updatedDoc = {
+        $set: updateDoctor,
+      };
+
+      try {
+        const result = await appointmentCollection.updateOne(
+          filter,
+          updatedDoc,
+          options
+        );
+        res.json({
+          success: true,
+          message: 'DOctor updated successfully',
+          data: result,
+        });
+      } catch (error) {
+        console.error('Error updating DOctor:', error);
+        res
+          .status(500)
+          .json({ success: false, message: 'Internal server error' });
+      }
+    });
+    //  Booking filter by department
+    app.get('/doctorDepartment/:department', async (req, res) => {
+      const department = req.params.department;
+      const query = { department };
+      const cursor = appointmentCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Delete one contact
+    app.delete('/doctorDelete/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await appointmentCollection.deleteOne(query);
       res.send(result);
     });
     // post Booking/ terminal
@@ -212,6 +315,49 @@ async function run() {
       const query = { date };
       const cursor = bookingCollection.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    //  update payment buy
+    app.put('/buyPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          payment: updatePayment.payment,
+        },
+      };
+      const result = await bookingCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+    //  update payment buy
+    app.put('/bookingAccept/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateAccept = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          accept: updateAccept.accept,
+        },
+      };
+      const result = await bookingCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+    // Delete one Booking Terminal
+    app.delete('/bookings/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await bookingCollection.deleteOne(query);
       res.send(result);
     });
   } finally {
