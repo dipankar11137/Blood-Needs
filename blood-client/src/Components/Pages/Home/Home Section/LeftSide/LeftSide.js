@@ -48,7 +48,6 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
   }, [address,bloodGroup]);
 
 
-console.log(dbUser[0]);
 
 
   return (

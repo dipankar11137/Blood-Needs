@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
-import { MdDashboard } from 'react-icons/md';
+import { FaSignsPost, FaUserDoctor } from 'react-icons/fa6';
+import { MdBookmarkAdd, MdDashboard } from 'react-icons/md';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import auth from '../../../firebase.init';
+
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
@@ -77,7 +78,7 @@ const Dashboard = () => {
                       className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
                     >
                       <div>
-                        {React.createElement(MdDashboard, {
+                        {React.createElement(FaUserDoctor, {
                           size: '20',
                         })}
                       </div>
@@ -137,7 +138,7 @@ const Dashboard = () => {
                       className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
                     >
                       <div>
-                        {React.createElement(MdDashboard, {
+                        {React.createElement(MdBookmarkAdd, {
                           size: '20',
                         })}
                       </div>
@@ -167,7 +168,7 @@ const Dashboard = () => {
                       className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-slate-600 rounded-md`}
                     >
                       <div>
-                        {React.createElement(MdDashboard, {
+                        {React.createElement(FaSignsPost, {
                           size: '20',
                         })}
                       </div>

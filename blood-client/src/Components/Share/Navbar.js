@@ -14,12 +14,12 @@ const Navbar = ({ setSearchGet }) => {
   const logout = () => {
     signOut(auth);
   };
-
-  useEffect(() => {
-    fetch(`https://boxberry.onrender.com/carBooking/${email}`)
-      .then(res => res.json())
-      .then(data => setBooking(data));
-  }, [booking, email]);
+console.log(booking)
+    useEffect(() => {
+      fetch(`http://localhost:5000/user/${email}`)
+        .then(res => res.json())
+        .then(data => setBooking(data));
+    }, [email, setBooking]);
 
   const [quires, setQuires] = useState([]);
 
@@ -107,8 +107,8 @@ const Navbar = ({ setSearchGet }) => {
           <div className="dropdown dropdown-end  mr-5">
             <label tabindex="0" className="btn btn-ghost btn-circle avatar z-50">
               <div className="w-10 rounded-full">
-                {booking[0]?.updateData?.img ? (
-                  <img src={booking[0]?.updateData?.img} alt="" />
+                {booking[0]?.img ? (
+                  <img src={booking[0]?.img} alt="" />
                 ) : (
                   <img
                     src="https://cdn.imgbin.com/6/25/24/imgbin-user-profile-computer-icons-user-interface-mystique-aBhn3R8cmqmP4ECky4DA3V88y.jpg"
