@@ -53,12 +53,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home searchGet={searchGet} />}></Route>
 
-        <Route path="/myBooking" element={<MyBookings />}></Route>
+        <Route
+          path="/myBooking"
+          element={
+            <RequireAuth>
+              <MyBookings />
+            </RequireAuth>
+          }
+        ></Route>
         <Route path="/payment/:id" element={<Payment />}></Route>
         <Route path="/paymentMember/:id" element={<PaymentMember />}></Route>
         <Route path="/paymentDoctor/:id" element={<DoctorPayment />}></Route>
         <Route path="/createAccount" element={<CreateAccount />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        ></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/*" element={<NotFound />}></Route>
 

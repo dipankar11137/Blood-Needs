@@ -108,7 +108,7 @@ const Profile = () => {
             </div>
             <div className="flex justify-between mr-5">
               <div>
-                {!dbUser[0].paymentMember ? (
+                {!dbUser[0]?.paymentMember ? (
                   <button
                     onClick={() => handleMember(dbUser[0]?._id)}
                     className="btn btn-accent font-bold "
@@ -122,7 +122,7 @@ const Profile = () => {
                 )}
               </div>
               <div>
-                {!dbUser[0].paymentDoctor ? (
+                {!dbUser[0]?.paymentDoctor ? (
                   <button
                     onClick={() => handleDoctor(dbUser[0]?._id)}
                     className="btn btn-accent font-bold "
