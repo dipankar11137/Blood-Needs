@@ -6,6 +6,7 @@ import "./App.css";
 import CreateAccount from "./Components/Login/CreateAccount";
 import Login from "./Components/Login/Login";
 import RequireAuth from "./Components/Login/RequireAUth";
+import AddDoctor from "./Components/Pages/Dashboard/AddDoctor/AddDoctor";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import ShowAllQueries from "./Components/Pages/Dashboard/ShowAllQueries/ShowAllQueries";
 import Home from "./Components/Pages/Home/Home";
@@ -57,8 +58,8 @@ function App() {
           }
         >
           <Route index element={<ShowAllQueries />} />
-          {/* <Route path="bookings" element={<Bookings />} />
           <Route path="addDoctor" element={<AddDoctor />} />
+          {/* <Route path="bookings" element={<Bookings />} />
           <Route path="manageDoctor" element={<ManageDoctors />} />
           <Route path="editDoctor/:id" element={<EditDoctor />} />
           <Route path="manageContact" element={<ManageContacts />} />

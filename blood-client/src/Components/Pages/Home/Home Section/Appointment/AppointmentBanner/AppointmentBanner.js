@@ -10,14 +10,16 @@ const AppointmentBanner = ({ selectDate, setSelectDate }) => {
   };
 
   return (
-    <div className="pt-[67px]">
+    <div className="">
       <div className="">
         <div className="related relative">
-          <div className="absolute top-0 left-0 z-10  h-[230px]  py-20 text-slate-50 bg-gradient-to-r from-primary  to-accent shadow-inner">
-            <h1 className="text-4xl font-semibold pr-20">Our Doctors</h1>
-            <h1 className="text-xl">
-              Home <span className="text-lg">/</span> Our Doctors
-            </h1>
+          <div className=" top-0 left-0 z-10  h-[130px]  flex justify-center items-center text-slate-50 bg-gradient-to-r from-slate-700  to-teal-800 shadow-inner">
+            <div>
+              <h1 className="text-4xl font-semibold pr-20">Our Doctors</h1>
+              <h1 className="text-xl">
+                Home <span className="text-lg">/</span> Our Doctors
+              </h1>
+            </div>
           </div>
           {/* <div>
             <img
@@ -58,7 +60,7 @@ const AppointmentBanner = ({ selectDate, setSelectDate }) => {
                   selected={selectDate}
                   onSelect={setSelectDate}
                   disabledDays={disabledDates}
-                  className="bg-cyan-200  rounded-lg shadow p-2 "
+                  className="bg-cyan-900  rounded-lg shadow p-2 "
                   inputProps={{ className: 'w-full rounded-lg ' }}
                   classNames={{
                     container: 'relative',

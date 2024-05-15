@@ -9,7 +9,7 @@ const AppointmentOption = ({ option, setCounseling, day }) => {
     navigator(`/doctorDetails/${id}`);
   };
   return (
-    <div className=" h-[425px] z-10 rounded-b-md border-[1px] border-primary hover:border-orange-600 cursor-pointer bg-base-100 shadow-xl hover:shadow-2xl">
+    <div className=" h-[425px] z-10 rounded-b-md border-[1px] border-primary hover:border-red-600 cursor-pointer bg-base-100 shadow-xl hover:shadow-2xl">
       <div className="">
         <div className="mt-0">
           <div className="bg-white mb-4 overflow-hidden">
@@ -32,7 +32,7 @@ const AppointmentOption = ({ option, setCounseling, day }) => {
 
         <div className="pt-3 pl-2">
           <h2 className="card-title font-bold -mt-4">{name}</h2>
-          <p className="text-[10px] my-1 font-semibold text-slate-800">
+          <p className="text-[10px] my-1 font-semibold text-slate-200">
             {option?.department}
           </p>
           <p className="text-[10px] my-1 font-normal">{option?.degree}</p>
@@ -46,7 +46,7 @@ const AppointmentOption = ({ option, setCounseling, day }) => {
         (modifyDay === 'wednesday') & option?.wednesday ||
         (modifyDay === 'thursday') & option?.thursday ? (
           <>
-            <h1 className="text-center text-sm text-indigo-800 font-bold">
+            <h1 className="text-center text-sm text-indigo-500 font-bold">
               This Day is Off day
             </h1>
             <h1 className="text-red-500 text-sm font-bold text-center">
@@ -63,7 +63,7 @@ const AppointmentOption = ({ option, setCounseling, day }) => {
                 <span className="text-red-500">Try Another Day</span>
               )}
             </p>
-            <p className="text-xs text-green-900 font-semibold text-center">
+            <p className="text-xs text-green-500 font-semibold text-center">
               {slots.length} {slots.length > 1 ? 'spaces' : 'space'}
             </p>
           </>

@@ -64,6 +64,36 @@ const Dashboard = () => {
                 <div className="mt-10 flex flex-col gap-4 relative ">
                   {/* Dashboard */}
                   <div
+                    onClick={() => setSelectedButton('Button 1')}
+                    className={
+                      selectedButton === 'Button 1'
+                        ? 'bg-slate-900 text-white w-[215px] rounded-lg'
+                        : ''
+                    }
+                  >
+                    {' '}
+                    <Link
+                      to="/dashboard/addDoctor"
+                      className={`  group flex items-center text-xl w-[215px] gap-3.5 font-medium p-2 hover:bg-warning rounded-md`}
+                    >
+                      <div>
+                        {React.createElement(MdDashboard, {
+                          size: '20',
+                        })}
+                      </div>
+                      <h2
+                        style={{
+                          transitionDelay: `${0 + 3}00ms`,
+                        }}
+                        className={`whitespace-pre duration-500  ${
+                          !open && 'opacity-0 translate-x-28 overflow-hidden '
+                        }`}
+                      >
+                      Add Doctor
+                      </h2>
+                    </Link>
+                  </div>
+                  <div
                     onClick={() => setSelectedButton('Button 10')}
                     className={
                       selectedButton === 'Button 10'

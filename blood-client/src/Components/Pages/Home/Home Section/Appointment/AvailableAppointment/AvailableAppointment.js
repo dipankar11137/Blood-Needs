@@ -58,16 +58,17 @@ useEffect(() => {
     <div>
       <section className="mt-6  pb-20">
         {/* {today <= date ? <h1>Right</h1> : <h1>Wrong</h1>} */}
-        <div className="bg-primary bg-gradient-to-r from-accent to-primary p-5 rounded-xl shadow-2xl -mt-60 mx-40">
+        {/* <div className="bg-primary bg-gradient-to-r from-zinc-600 to-stone-700 p-5 rounded-xl shadow-2xl -mt-60 mx-5"> */}
+          <div className="-mt-60 mx-7">
           <div className="">
             {result ? (
-              <p className="text-3xl  text-center mt-5 text-slate-50 font-bold mb-6">
+              <p className="text-xl  text-center mt-5 text-slate-50 font-bold mb-6">
                 Available Appointment on {day}, {format(selectDate, 'PP')}
               </p>
             ) : (
-              <p className="text-3xl  text-center mt-5 text-slate-50 font-bold mb-6">
-                {day}, {format(selectDate, 'PP')} <br /> <br /> <br />
-                <span className="text-red-600 ">
+              <p className="text-xl  text-center  text-slate-50 font-bold ">
+                {day}, {format(selectDate, 'PP')} <br /> <br />
+                <span className="text-red-400 ">
                   This day is the day of the past. So we cannot take Appointment
                   .
                 </span>
@@ -75,7 +76,7 @@ useEffect(() => {
             )}
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex gap-5 mt-10">
             <div>
               <select
                 onChange={e => setDepartment(e.target.value)}
@@ -112,7 +113,7 @@ useEffect(() => {
         </div>
 
         {result && (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-36 mt-32 mx-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-6 gap-y-36 mt-32 mx-24">
             {appointmentOptions.map(option => (
               <AppointmentOption
                 key={option._id}
