@@ -105,7 +105,10 @@ console.log(booking)
       <div className="navbar-end">
         {user ? (
           <div className="dropdown dropdown-end  mr-5">
-            <label tabindex="0" className="btn btn-ghost btn-circle avatar z-50">
+            <label
+              tabindex="0"
+              className="btn btn-ghost btn-circle avatar z-50"
+            >
               <div className="w-10 rounded-full">
                 {booking[0]?.img ? (
                   <img src={booking[0]?.img} alt="" />
@@ -127,9 +130,12 @@ console.log(booking)
               <li>
                 <Link to="/myBooking">My Booking</Link>
               </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
+
+              {user.email === 'mehediriad.cse@gmail.com' && (
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+              )}
 
               <li className=" font-bold">
                 {user ? (

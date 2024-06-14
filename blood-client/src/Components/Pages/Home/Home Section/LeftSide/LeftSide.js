@@ -14,41 +14,41 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
   const [address, setAddress] = useState('');
   const [bloodGroup, setBloodGroup] = useState('');
   const [data, setData] = useState([]);
-     const [authUser] = useAuthState(auth);
+  const [authUser] = useAuthState(auth);
   const [dbUser, setDbUser] = useState([]);
-  
-     useEffect(() => {
-       fetch(`http://localhost:5000/user/${authUser?.email}`)
-         .then(res => res.json())
-         .then(data => setDbUser(data));
-     }, [dbUser, authUser]);
+   const [allDonner, setAllDonner] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users`)
+    fetch(`http://localhost:5000/user/${authUser?.email}`)
       .then(res => res.json())
-      .then(data => setData(data));
-  }, []);
-
+      .then(data => setDbUser(data));
+  }, [dbUser, authUser]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/users`)
       .then(res => res.json())
       .then(data => {
-        // Check if desiredAddress and desiredBloodGroup are provided
-        if (!address && !bloodGroup) {
-          setMembers(data); // If not provided, set all members
-        } else {
-          // Filter the data based on address or blood group
-          const filteredData = data.filter(
-            user => user.address === address || user.bloodGroup === bloodGroup
-          );
-          setMembers(filteredData);
-        }
+        setData(data)
+        setAllDonner(data)
       });
-  }, [address,bloodGroup]);
+  }, []);
 
+ 
 
-
+  // Filter donors based on address and blood group
+  useEffect(() => {
+    if (!address && !bloodGroup) {
+      setMembers(allDonner); // If no filters, show all donors
+    } else {
+      const filteredDonner = allDonner.filter(donner => {
+        return (
+          (!address || donner.address === address) &&
+          (!bloodGroup || donner.bloodGroup === bloodGroup)
+        );
+      });
+      setMembers(filteredDonner);
+    }
+  }, [address, bloodGroup, allDonner, members]);
 
   return (
     <div className="text-slate-300">
@@ -129,12 +129,12 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
                 onChange={e => setAddress(e.target.value)}
                 className="select select-bordered w-full max-w-xs "
               >
-                <option disabled selected>
-                  Location
-                </option>
-                {[...new Set(data.map(member => member.address))].map(
-                  (address, index) => (
-                    <option key={index}>{address}</option>
+                <option value="">Select Address</option>
+                {[...new Set(allDonner.map(donner => donner.address))].map(
+                  (addr, index) => (
+                    <option key={index} value={addr}>
+                      {addr}
+                    </option>
                   )
                 )}
               </select>
@@ -142,14 +142,14 @@ const LeftSide = ({ handleHome, setHome, members, setMembers }) => {
             <div className="mt-5">
               <select
                 onChange={e => setBloodGroup(e.target.value)}
-                className="select select-bordered w-full max-w-xs"
+                className="select select-bordered w-full max-w-xs "
               >
-                <option disabled selected>
-                  Blood Group
-                </option>
-                {[...new Set(data.map(member => member.bloodGroup))].map(
-                  (bloodGroup, index) => (
-                    <option key={index}>{bloodGroup}</option>
+                <option value="">Select Blood Group</option>
+                {[...new Set(allDonner.map(donner => donner.bloodGroup))].map(
+                  (group, index) => (
+                    <option key={index} value={group}>
+                      {group}
+                    </option>
                   )
                 )}
               </select>
