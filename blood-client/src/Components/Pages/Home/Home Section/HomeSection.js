@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FaArrowAltCircleLeft, FaCommentAlt, FaShare } from 'react-icons/fa';
 import { GoDotFill } from 'react-icons/go';
+import { useNavigate } from 'react-router-dom';
 import { WhatsappShareButton } from 'react-share';
 import { toast } from 'react-toastify';
 import auth from '../../../../firebase.init';
@@ -16,7 +17,9 @@ const HomeSection = ({ quire, handleRemove, setMId }) => {
   const [comments, setComments] = useState([]);
   const [rId, setRId] = useState('')
   const url = 'http://localhost:3000/';
-  const title='hello'
+  const title = 'hello'
+  
+  const navigator=useNavigate()
 
   // console.log(users)
   useEffect(() => {
@@ -69,7 +72,9 @@ const HomeSection = ({ quire, handleRemove, setMId }) => {
     }
   }, [quire]);
 
-
+  const handleClick = id => {
+  navigator(`profileHome/${id}`)
+}
   return (
     <div className="border-b-[1px] border-slate-600 pb-2 mb-3">
       <div className="  ">
@@ -85,11 +90,13 @@ const HomeSection = ({ quire, handleRemove, setMId }) => {
             )}
             <div className="flex justify-between  w-full ">
               <div className="flex items-end">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src={quire?.img}
-                  alt=""
-                />
+                <div onClick={() => { handleClick(quire._id) }}>
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={quire?.img}
+                    alt=""
+                  />
+                </div>
                 <div className="flex items-center">
                   <h1 className="ml-3 font-semibold text-indigo-300">
                     {quire?.name}{' '}

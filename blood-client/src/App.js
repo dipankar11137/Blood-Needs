@@ -18,6 +18,7 @@ import PaymentMember from "./Components/Pages/Dashboard/Profile/PaymentMember";
 import Profile from "./Components/Pages/Dashboard/Profile/Profile";
 import ShowAllQueries from "./Components/Pages/Dashboard/ShowAllQueries/ShowAllQueries";
 import Home from "./Components/Pages/Home/Home";
+import ProfileHome from "./Components/Pages/Home/Profile/ProfileHome";
 import Navbar from "./Components/Share/Navbar";
 import NotFound from "./Components/Share/NotFound";
 
@@ -61,7 +62,15 @@ function App() {
             </RequireAuth>
           }
         ></Route>
-        <Route path="/payment/:id" element={<Payment />}></Route>
+        <Route
+          path="/payment/:id"
+          element={
+            <RequireAuth>
+              <Payment />
+            </RequireAuth>
+          }
+        ></Route>
+        <Route path="/profileHome/:id" element={<ProfileHome />}></Route>
         <Route path="/paymentMember/:id" element={<PaymentMember />}></Route>
         <Route path="/paymentDoctor/:id" element={<DoctorPayment />}></Route>
         <Route path="/createAccount" element={<CreateAccount />}></Route>
