@@ -78,7 +78,7 @@ async function run() {
       res.send(result);
     });
 
-    //  update payment 
+    //  update payment
     app.put('/memberPayment/:id', async (req, res) => {
       const id = req.params.id;
       const updatePayment = req.body;
@@ -92,7 +92,7 @@ async function run() {
       const result = await userCollection.updateOne(query, updateDoc, options);
       res.send(result);
     });
-    //  update payment 
+    //  update payment
     app.put('/doctorPayment/:id', async (req, res) => {
       const id = req.params.id;
       const updatePayment = req.body;
@@ -121,6 +121,14 @@ async function run() {
       const cursor = quiresCollection.find(query);
       const users = await cursor.toArray();
       res.send(users);
+    });
+    //  quires  filter by id
+    app.get('/quire/:id', async (req, res) => {
+      const id = req.params.id;
+       const query = { _id: ObjectId(id) };
+      const cursor = quiresCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
     });
     // Delete one quires
     app.delete('/quire/:id', async (req, res) => {
@@ -182,13 +190,6 @@ async function run() {
       const result = await quizSolutionCollection.deleteOne(query);
       res.send(result);
     });
-    // app.get('/comment/:pId', async (req, res) => {
-    //   const pId = req.params.pId;
-    //   const query = { pId };
-    //   const cursor = commentCollection.find(query);
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
 
     // doctor
 
@@ -367,9 +368,9 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-  res.send('Running Queries ');
+  res.send('Running Blood ');
 });
 
 app.listen(port, () => {
-  console.log('Queries  server is running ');
+  console.log('Blood  server is running ');
 });
